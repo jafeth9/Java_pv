@@ -30,7 +30,7 @@ public class Eliminar extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	static Eliminar dialog = new Eliminar();
 	Statement stmnt=null;
-	private JPasswordField ContraseñaAdmin;
+	private JPasswordField ContraseniaAdmin;
 	static JTable TablaUsuarios;
 	/**
 	 * Launch the application.
@@ -50,7 +50,7 @@ public class Eliminar extends JDialog {
 	 */
 	public Eliminar() {
 		String Usuario="Alejandro";
-		String Contraseña="12345";
+		String Contrasenia="12345";
 		String URL="jdbc:mysql://localhost/tienda2015";
 		
 	    java.sql.Connection conn=null;
@@ -58,7 +58,7 @@ public class Eliminar extends JDialog {
 	    ResultSet rs=null;
 	   
 		try {
-			conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+			conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 			stmnt=conn.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -89,25 +89,25 @@ public class Eliminar extends JDialog {
 		lblIngresaContraselaDe.setForeground(Color.WHITE);
 		contentPanel.add(lblIngresaContraselaDe);
 		
-		ContraseñaAdmin = new JPasswordField();
-		ContraseñaAdmin.setBounds(20, 111, 272, 20);
-		contentPanel.add(ContraseñaAdmin);
+		ContraseniaAdmin = new JPasswordField();
+		ContraseniaAdmin.setBounds(20, 111, 272, 20);
+		contentPanel.add(ContraseniaAdmin);
 		
 		JButton btnNewButton = new JButton("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String a;
 				a=(String)UsuariosBorra.getSelectedItem();
-				if (a.equals("Administrador" ) && ContraseñaAdmin.getText().equals("JESUS")) {
+				if (a.equals("Administrador" ) && ContraseniaAdmin.getText().equals("JESUS")) {
 					JOptionPane.showMessageDialog(null,"NO PUEDES BORRAR AL ADMINISTRADOR","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-					ContraseñaAdmin.setText("");
+					ContraseniaAdmin.setText("");
 				}else{
-				if (ContraseñaAdmin.getText().equals("JESUS")) {
+				if (ContraseniaAdmin.getText().equals("JESUS")) {
 					try {
 						stmnt.executeUpdate("DELETE FROM  `tienda2015`.`usuarios` WHERE  `usuarios`.`USUARIOS` =  '"+a+"';");
 						ConexionTableModel ctm=new ConexionTableModel("select * from usuarios");
 						Login.JTResultadoUser.setModel(ctm.getTablemodel());
-						ContraseñaAdmin.setText("");
+						ContraseniaAdmin.setText("");
 						JOptionPane.showMessageDialog(null, "SE A BORRADO EL USUARIO CORRECTAMENTE");
 						 try {
 								final ConexionTableModel ctm1=new ConexionTableModel("SELECT USUARIOS FROM usuarios");
@@ -128,8 +128,8 @@ public class Eliminar extends JDialog {
 						e.printStackTrace();
 					}
 				}else{
-					JOptionPane.showMessageDialog(null,"LA CONTRASEÑA INCORRECTA","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-					ContraseñaAdmin.setText("");
+					JOptionPane.showMessageDialog(null,"LA CONTRASEï¿½A INCORRECTA","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+					ContraseniaAdmin.setText("");
 				}
 			}
 			}

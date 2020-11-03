@@ -49,14 +49,14 @@ public class Invetarios extends JDialog {
 setTitle("INVENTARIO");
 		
 		String Usuario="Alejandro";
-		String Contraseña="12345";
+		String Contrasenia="12345";
 		String URL="jdbc:mysql://localhost/tienda2015";
 		
 	    java.sql.Connection conn=null;
 	    
 	    ResultSet rs=null;
 	    try {
-			conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+			conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 			stmnt=conn.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

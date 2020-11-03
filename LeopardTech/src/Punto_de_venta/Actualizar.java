@@ -126,14 +126,14 @@ public class Actualizar extends JDialog {
 					JOptionPane.showMessageDialog(null,"VERIFICA QUE LOS CAMPO ESTEN LLENOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 				}
 				String Usuario="Alejandro";
-				String Contraseña="12345";
+				String Contrasenia="12345";
 				String URL="jdbc:mysql://localhost/tienda2015";
 				
 			    java.sql.Connection conn=null;
 			    Statement stmnt=null;
 			    ResultSet rs=null;
 			    try {
-			    	conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+			    	conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 					stmnt=conn.createStatement();
 					//para insertar 
 					stmnt.executeUpdate("UPDATE `tienda2015`.`productos` SET  `CANTIDAD` =  '"+Cantidad.getText()+"',`DESCRIPCION` =  '"+Nombre.getText()+"',`PRECIO_UNITARIO` =  '"+Precio.getText()+"' WHERE  `productos`.`CODIGO_BARRA` ="+BARRA.getText()+";");
@@ -222,9 +222,9 @@ public class Actualizar extends JDialog {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
     	    	 ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE CODIGO_BARRA='"+des+"'");
     	    	  if( resultadosConsulta.first() )        

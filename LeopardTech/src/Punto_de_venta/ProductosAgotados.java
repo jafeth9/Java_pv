@@ -26,7 +26,7 @@ public class ProductosAgotados extends JDialog {
 	static JTable ProductosAgotados;
 
 	String Usuario="Alejandro";
-	String Contraseña="12345";
+	String Contrasenia="12345";
 	String URL="jdbc:mysql://localhost/tienda2015";
 	
     java.sql.Connection conn=null;
@@ -95,7 +95,7 @@ public class ProductosAgotados extends JDialog {
 		getContentPane().add(lblProductosAgotados);
 		
 		try {
-			conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+			conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 			stmnt=conn.createStatement();
 			ConexionTableModel ctm=new ConexionTableModel("Select CANTIDAD,DESCRIPCION from productos WHERE CANTIDAD='0'");
 			ProductosAgotados.setModel(ctm.getTablemodel());

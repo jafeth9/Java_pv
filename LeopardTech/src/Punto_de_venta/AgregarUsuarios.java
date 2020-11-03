@@ -34,8 +34,8 @@ public class AgregarUsuarios extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	static JTextField Usuarios;
-	static JPasswordField Contraseña;
-	static JPasswordField Contraseña2;
+	static JPasswordField Contrasenia;
+	static JPasswordField Contrasenia2;
 	
 	static Vector<String> vee = new Vector<String>();
 	static AgregarUsuarios dialog = new AgregarUsuarios();
@@ -78,13 +78,13 @@ public class AgregarUsuarios extends JDialog {
 		contentPanel.add(Usuarios);
 		Usuarios.setColumns(10);
 		
-		JLabel lblIngresaUnaContrasea = new JLabel("INGRESA UNA CONTRASE\u00D1A:");
+		JLabel lblIngresaUnaContrasea = new JLabel("INGRESA UNA CONTRASEÑA:");
 		lblIngresaUnaContrasea.setFont(new Font("Andalus", Font.PLAIN, 13));
 		lblIngresaUnaContrasea.setBounds(10, 90, 192, 14);
 		lblIngresaUnaContrasea.setForeground(Color.WHITE);
 		contentPanel.add(lblIngresaUnaContrasea);
 		
-		JLabel lblConfirmaTuContrasea = new JLabel("CONFIRMA TU CONTRASE\u00D1A:");
+		JLabel lblConfirmaTuContrasea = new JLabel("CONFIRMA TU CONTRASEÑA:");
 		lblConfirmaTuContrasea.setFont(new Font("Andalus", Font.PLAIN, 13));
 		lblConfirmaTuContrasea.setBounds(10, 132, 192, 14);
 		lblConfirmaTuContrasea.setForeground(Color.WHITE);
@@ -94,33 +94,33 @@ public class AgregarUsuarios extends JDialog {
 		btnNewButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				 if (Usuarios.getText().equals("") && Contraseña.getText().equals("") && Contraseña2.getText().equals("") || Usuarios.getText().equals("") || Contraseña.getText().equals("") || Contraseña2.getText().equals("")) {
+				 if (Usuarios.getText().equals("") && Contrasenia.getText().equals("") && Contrasenia2.getText().equals("") || Usuarios.getText().equals("") || Contrasenia.getText().equals("") || Contrasenia2.getText().equals("")) {
 					 JOptionPane.showMessageDialog(null,"VERIFIQUE QUE TODO LOS CAMPOS ESTEN LLENOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-					    AgregarUsuarios.Contraseña.setText("");
-					    Contraseña2.setText("");
+					    AgregarUsuarios.Contrasenia.setText("");
+					    Contrasenia2.setText("");
 				}else{
 					String Usuario="Alejandro";
-					String Contraseña="12345";
+					String Contrasenia="12345";
 					String URL="jdbc:mysql://localhost/tienda2015";
 					
 				    java.sql.Connection conn=null;
 				    Statement stmnt=null;
 				    ResultSet rs=null;
 				    try{
-						conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+						conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 						stmnt=conn.createStatement();
 										
 				if( validarUsuario(Usuarios.getText()  ) )    //enviar datos a validar
 	              {
 					JOptionPane.showMessageDialog(null,"EL USUARIO YA EXISTE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 	                   Usuarios.setText("");
-					   AgregarUsuarios.Contraseña.setText("");
-					   Contraseña2.setText("");
+					   AgregarUsuarios.Contrasenia.setText("");
+					   Contrasenia2.setText("");
 	      
 	               }else
 	               {
-						if (AgregarUsuarios.Contraseña.getText().equals(Contraseña2.getText())) {
-						stmnt.executeUpdate("INSERT INTO  `tienda2015`.`usuarios` (`USUARIOS` ,`CONTRASEÑAS`)VALUES ('"+Usuarios.getText()+"',  '"+Contraseña2.getText()+"');");
+						if (AgregarUsuarios.Contrasenia.getText().equals(Contrasenia2.getText())) {
+						stmnt.executeUpdate("INSERT INTO  `tienda2015`.`usuarios` (`USUARIOS` ,`CONTRASEÑAS`)VALUES ('"+Usuarios.getText()+"',  '"+Contrasenia2.getText()+"');");
 						ConexionTableModel ctm=new ConexionTableModel("select * from usuarios");
 						Login.JTResultadoUser.setModel(ctm.getTablemodel());
 						JOptionPane.showMessageDialog(null, "EL USUARIO SE A CREADO CORRECTAMENTE");
@@ -130,8 +130,8 @@ public class AgregarUsuarios extends JDialog {
 						}
 						String a=Usuarios.getText();
 					    Usuarios.setText("");
-					    AgregarUsuarios.Contraseña.setText("");
-					    Contraseña2.setText("");
+					    AgregarUsuarios.Contrasenia.setText("");
+					    Contrasenia2.setText("");
 					    
 					    try {
 							final ConexionTableModel ctm1=new ConexionTableModel("SELECT USUARIOS FROM usuarios");
@@ -145,8 +145,8 @@ public class AgregarUsuarios extends JDialog {
 						}
 						}else
 						{
-						    AgregarUsuarios.Contraseña.setText("");
-						    Contraseña2.setText("");
+						    AgregarUsuarios.Contrasenia.setText("");
+						    Contrasenia2.setText("");
 							JOptionPane.showMessageDialog(null,"LA CONTRASEÑA NO COINCIDE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 						}
 						//para borrar
@@ -193,15 +193,15 @@ public class AgregarUsuarios extends JDialog {
 		btnNewButton.setBounds(259, 160, 98, 44);
 		contentPanel.add(btnNewButton);
 		
-		Contraseña = new JPasswordField();
-		Contraseña.setHorizontalAlignment(SwingConstants.CENTER);
-		Contraseña.setBounds(197, 86, 165, 20);
-		contentPanel.add(Contraseña);
+		Contrasenia = new JPasswordField();
+		Contrasenia.setHorizontalAlignment(SwingConstants.CENTER);
+		Contrasenia.setBounds(197, 86, 165, 20);
+		contentPanel.add(Contrasenia);
 		
-		Contraseña2 = new JPasswordField();
-		Contraseña2.setHorizontalAlignment(SwingConstants.CENTER);
-		Contraseña2.setBounds(197, 129, 165, 20);
-		contentPanel.add(Contraseña2);
+		Contrasenia2 = new JPasswordField();
+		Contrasenia2.setHorizontalAlignment(SwingConstants.CENTER);
+		Contrasenia2.setBounds(197, 129, 165, 20);
+		contentPanel.add(Contrasenia2);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(404, 49, 219, 154);
@@ -230,7 +230,7 @@ public class AgregarUsuarios extends JDialog {
 		contentPanel.add(lblAgregarUsuarios);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Program Files\\Abarrotes El Atoron\\Imagenes\\fondo_inicio.jpg"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\"+Ruta.imagen+"\\Abarrotes El Atoron\\Imagenes\\fondo_inicio.jpg"));
 		lblNewLabel.setBounds(0, 0, 646, 214);
 		contentPanel.add(lblNewLabel);
 	}
@@ -242,9 +242,9 @@ public class AgregarUsuarios extends JDialog {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM usuarios WHERE USUARIOS='"+elUsr+"'");
             if( resultadosConsulta.first() )        

@@ -84,7 +84,7 @@ public class AgregarDatos extends JDialog {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String Usuario="Alejandro";
-				String Contraseña="12345";
+				String Contrasenia="12345";
 				String URL="jdbc:mysql://localhost/tienda2015";
 				
 			    java.sql.Connection conn=null;
@@ -97,7 +97,7 @@ public class AgregarDatos extends JDialog {
 				else
 				{
 				try{
-				conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+				conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 				stmnt=conn.createStatement();
 				//para insertar 
 				if (validarProductos(Codigo_BarraProductos.getText(),producto.getText()) || validarProductos1(Codigo_BarraProductos.getText()) ||  validarProductos2(producto.getText()))  {
@@ -196,9 +196,9 @@ public class AgregarDatos extends JDialog {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE CODIGO_BARRA='"+des+"'AND DESCRIPCION='"+asd+"'");
             if( resultadosConsulta.first() )        
@@ -220,9 +220,9 @@ public class AgregarDatos extends JDialog {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE CODIGO_BARRA='"+des+"'");
             if( resultadosConsulta.first() )        
@@ -244,9 +244,9 @@ public class AgregarDatos extends JDialog {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE DESCRIPCION='"+des+"'");
             if( resultadosConsulta.first() )        

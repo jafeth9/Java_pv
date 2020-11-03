@@ -31,6 +31,7 @@ public class ConexionTableModel {
     Connection cn= cc.conexion();
 	  public void mostrardatos(String valor) throws SQLException{
 		    DefaultTableModel modelo= new DefaultTableModel();
+		    modelo.addColumn("ID");
 		    modelo.addColumn("CODIGO_BARRA");
 		    modelo.addColumn("CANTIDAD");
 		    modelo.addColumn("DESCRIPCION");
@@ -39,23 +40,25 @@ public class ConexionTableModel {
 		    String sql="";
 		    if(valor.equals(""))
 		    {
-		        sql="SELECT * FROM productos";
+		        //sql="SELECT CODIGO_BARRA,CANTIDAD,DESCRIPCION,PRECIO_UNITARIO FROM productos";
+		    	sql="SELECT * FROM productos";
 		    }
 		    else{
-		        //sql="SELECT * FROM productos WHERE codpro='"+valor+"'";
-		        sql="SELECT * FROM productos WHERE descripcion like '%"+valor+"%'";
+		    	sql="SELECT * FROM productos WHERE descripcion like '%"+valor+"%'";
+		        //sql="SELECT CODIGO_BARRA,CANTIDAD,DESCRIPCION,PRECIO_UNITARIO FROM productos WHERE descripcion like '%"+valor+"%'";
 		    }
 		 
-		    Object []datos = new Object [4];
+		    Object []datos = new Object [5];
 		        try {
 		            Statement st = cn.createStatement();
 		            ResultSet rs = st.executeQuery(sql);
 		            while(rs.next()){
-		                datos[0]=rs.getDouble(1);
-		                
-		                datos[1]=rs.getInt(2);
-		                datos[2]=rs.getString(3);
-		                datos[3]=rs.getDouble(4);
+		            	
+		            	datos[0]=rs.getInt(1);
+		                datos[1]=rs.getDouble(2);
+		                datos[2]=rs.getInt(3);
+		                datos[3]=rs.getString(4);
+		                datos[4]=rs.getDouble(5);
 		                
 		                modelo.addRow(datos);
 		            }
@@ -64,8 +67,8 @@ public class ConexionTableModel {
 		            ex.printStackTrace();
 		        }finally {
 		        	
-					
 					cn.close();
+					
 				}
 		    
 		    }
@@ -94,7 +97,7 @@ public class ConexionTableModel {
 	{
 		DefaultTableModel dftable=new DefaultTableModel();
 		String Usuario="Alejandro";
-		String Contraseña="12345";
+		String Contrasenia="12345";
 		String URL="jdbc:mysql://localhost/tienda2015";
 		
 		
@@ -103,7 +106,7 @@ public class ConexionTableModel {
 		ResultSet rs= null;
 	
 		try{
-     	conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+     	conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
 		stmnt=conn.createStatement();
 		rs=stmnt.executeQuery(query);
 		if(rs!=null)
@@ -138,6 +141,8 @@ public class ConexionTableModel {
 	return null;
 	
  }
+	
+//select CODIGO_BARRA,CANTIDAD,DESCRIPCION,PRECIO_UNITARIO from productos	
 }
 	
 	

@@ -24,6 +24,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Formatter;
 import java.util.GregorianCalendar;
@@ -111,6 +114,10 @@ public class PuntoDeVenta extends JFrame {
 	static int cb;
 	static Eliminar dialog1 = new Eliminar();
 	static JButton btnAgregar = new JButton("AGREGAR PRODUCTO");
+	/*------------jafeth8******************----------------------------*/
+	static JButton btnApartar = new JButton("APARTAR PRODUCTOS");
+	public static int setClienteId=0;
+	/*------------******************-----------------------------------*/
 	static JTextField TFQuery1;
 	static int codigodebarra;
 	static JLabel UsuarioLabel;
@@ -122,6 +129,7 @@ public class PuntoDeVenta extends JFrame {
 	static JTextField CodigoBarra = new JTextField();
 	static DefaultTableModel model ;
 	static JMenu mnUsuarios= new JMenu("USUARIOS");
+	static JMenu mnClientes= new JMenu("CLIENTES");
 	static JButton btnEliminar = new JButton("ELIMINAR PRODUCTO");
 	static float total=0;
 	static String subtotaltabla;
@@ -155,6 +163,9 @@ public class PuntoDeVenta extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -184,15 +195,17 @@ public class PuntoDeVenta extends JFrame {
 		
 		
 		
+		
+		
 		String Usuario="Alejandro";
-		String Contraseña="12345";
+		String Contrasenia="12345";
 		String URL="jdbc:mysql://localhost/tienda2015";
 		
 	    java.sql.Connection conn=null;
 	    
 	    ResultSet rs=null;
 	    try {
-			conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+			conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 			stmnt=conn.createStatement();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -254,13 +267,13 @@ public class PuntoDeVenta extends JFrame {
 								cb=Nproductos;
 								model = (DefaultTableModel) JTResultado1.getModel();
 								
-								cantidad=JTResultado1.getValueAt(flsel, 1).toString();
-								descripcion = JTResultado1.getValueAt(flsel, 2).toString();
-								precio=JTResultado1.getValueAt(flsel, 3).toString();
+								cantidad=JTResultado1.getValueAt(flsel, 2).toString();
+								descripcion = JTResultado1.getValueAt(flsel, 3).toString();
+								precio=JTResultado1.getValueAt(flsel, 4).toString();
 								
 								int tabla = Integer.parseInt(cantidad);
 								if (cb<=0) {
-									JOptionPane.showMessageDialog(null,"EL DATO QUE ES INCORRECTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null,"EL DATO ES INCORRECTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 									ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
 									JTResultado1.setModel(ctm1.getTablemodel());
 								}else{
@@ -311,9 +324,10 @@ public class PuntoDeVenta extends JFrame {
 								}
 								}
 								}
-							 catch (Exception e) {	
+							 catch (Exception e) {
+								 e.printStackTrace();
 							}	
-								/*-----------------------------------JAFETH8---------------------------------------*/
+						    /*-----------------------------------JAFETH8---------------------------------------*/
 							}
 								
 							
@@ -331,83 +345,7 @@ public class PuntoDeVenta extends JFrame {
 							
 						}
 							
-						
-						   /* final int flsel=0;
-							try{
-							
-									
-							Nproductos=Integer.parseInt(CantidadProductos.getText());
-							
-							cb=Nproductos;
-							model = (DefaultTableModel) JTResultado1.getModel();
-							
-							cantidad=JTResultado1.getValueAt(flsel, 1).toString();
-							descripcion = JTResultado1.getValueAt(flsel, 2).toString();
-							precio=JTResultado1.getValueAt(flsel, 3).toString();
-							
-							int tabla = Integer.parseInt(cantidad);
-							if (cb<=0) {
-								JOptionPane.showMessageDialog(null,"EL DATO QUE ES INCORRECTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-								ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-								JTResultado1.setModel(ctm1.getTablemodel());
-							}else{
-							if (cb>tabla) {
-								JOptionPane.showMessageDialog(null,"PRODUCTO INSUFICIENTE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-								ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-								JTResultado1.setModel(ctm1.getTablemodel());
-							}
-							else{
-									if(validarUsuario(descripcion) )
-				              		{
-										for (int j = 0; j < table.getRowCount(); j++) {
-												String cantidad1=table.getValueAt(j, 0).toString();
-												String descripcioncompras=table.getValueAt(j, 1).toString();
-												if (descripcioncompras.equals(descripcion)) {
-												x=(Double.parseDouble(cantidad1)+cb);
-												double a=((Double.parseDouble(cantidad1)+cb)*Double.parseDouble(precio));
-													if (tabla<x) {
-														JOptionPane.showMessageDialog(null,"PRODUCTO INSUFICIENTE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-														ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-														JTResultado1.setModel(ctm1.getTablemodel());
-													}else{
-														stmnt.executeUpdate("UPDATE  `tienda2015`.`tcompras` SET  `CANTIDAD` =  '"+x+"',`SUB_TOTAL` =  '"+a+"' WHERE DESCRIPCION='"+descripcion+"'");
-														ctm=new ConexionTableModel("select * from tcompras");
-														table.setModel(ctm.getTablemodel());
-														calcula = (Double.parseDouble(precio)*cb);
-														total=(float) (total+calcula);
-														ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-														JTResultado1.setModel(ctm1.getTablemodel());
-														CodigoBarra.setText("");
-													}
-												}
-												}
-				              		 }else{
-				              			
-				              		  			x=(cb*Double.parseDouble(precio));
-				              		  			Sub_Total= String.valueOf(x);
-				              		  			stmnt.executeUpdate("INSERT INTO `tienda2015`.`tcompras` (`CANTIDAD`, `DESCRIPCION`, `PRECIO_UNITARIO`, `SUB_TOTAL`) VALUES ('"+cb+"', '"+descripcion+"', '"+precio+"', '"+Sub_Total+"');");
-				              		  			ctm=new ConexionTableModel("select * from tcompras");
-				              		  			table.setModel(ctm.getTablemodel());
-				              		  			calcula = (Double.parseDouble(precio)*cb);
-				              		  		    total=(float) (total+calcula);
-				              		  		    ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-					    					    JTResultado1.setModel(ctm1.getTablemodel());
-					    					    CodigoBarra.setText("");
-								          }
-							TOTAL.setText("$ "+total);
-							}
-							}
-							}
-						 catch (Exception e) {	
-						}	*/
-						
 						}
-					/*}else{
-						JOptionPane.showMessageDialog(null,"EL PRODUCTO NO EXISTE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-						ConexionTableModel ctm1 = new ConexionTableModel("select * from productos");
-						JTResultado1.setModel(ctm1.getTablemodel());
-						CodigoBarra.setText("");
-					}*/
 										
 				} catch (Exception e2) {
 					e2.printStackTrace();
@@ -452,6 +390,7 @@ public class PuntoDeVenta extends JFrame {
 		getContentPane().add(scrollPane);
 		
 		JTResultado1 = new JTable();
+		
 		JTResultado1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JTResultado1.setToolTipText("Tabla de productos");
 		scrollPane.setViewportView(JTResultado1);
@@ -497,9 +436,85 @@ public class PuntoDeVenta extends JFrame {
 		});
 		btnAgregar.setIcon(new ImageIcon("C:\\"+Ruta.imagen+"\\Abarrotes El Atoron\\Imagenes\\anadir-registro-icono-8419-32.png"));
 		getContentPane().add(btnAgregar);
-		
-		
-		btnEliminar.setBounds(450, 79, 180, 52);
+		/*----------------jafeth8:btnApartar------------------------------*/
+		btnApartar.setBounds(277, 79, 200, 52);
+		getContentPane().add(btnApartar);
+		btnApartar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Metodos instancia=new Metodos();
+				int fila=JTResultado1.getSelectedRow();
+				String resultadoString;
+				boolean entradaValida=true;
+				int cantidadTabla;
+				double precioTabla;
+				
+				/*---VARIABLES: PARA INSERTAR EN TABLA APARTADOS*/
+				int idCliente;
+				int id_producto;// perfectamente se podria utilizar (setClienteId) la variable estatica de la clase, pero para no revolver variables la dejo XD
+				int cantidadIngresada;
+				double total;
+				//LocalDate.now();
+				String fecha;
+				String estado;
+				
+				/*---FIN DE VARIABLES:PARA INSERTAR EN TABLA APARTADOS */
+				if (fila>=0) {
+					try {
+						do {
+							resultadoString=JOptionPane.showInputDialog("CANTIDAD DE PRODUCTOS A APARTAR");
+							entradaValida=instancia.validarEntradaCantidad(resultadoString);
+							if(entradaValida) { //<----ultimo filtro a evaluar: que la cantidad  ingresada no sobrepase a la cantidad de la tala 
+								cantidadTabla=Integer.parseInt(JTResultado1.getValueAt(fila, 2).toString());
+								entradaValida=instancia.validarCantidadProducto(resultadoString, cantidadTabla);
+							}
+							
+						} while (entradaValida==false);
+						/*----SI LA ENTRADA ES VALIDA:CONTINUAR---*/
+						JOptionPane.showMessageDialog(null,"muy bien!, enseguida seleccione al cliente que hara el apartado");
+						MostrarClientes datosClientes=new MostrarClientes();
+						datosClientes.setVisible(true);
+					    
+						idCliente=setClienteId;//setIdCliente es una variable estatica para recibir datos de la ventana MostrarClientes
+						if(idCliente==0) {//si id cliente es igual a cero significa que no se establecio un idCliente, por lo tanto la ventana fue cerrada
+							JOptionPane.showMessageDialog(null, "operacion cancelada" ,"NO SELECCIONO AL CLIENTE!!", JOptionPane.WARNING_MESSAGE);
+						}else {
+							precioTabla=Double.parseDouble(JTResultado1.getValueAt(fila,4).toString());
+							/*se inicializan las variables restantes para insertar a tabla apartados*/
+							id_producto=Integer.parseInt(JTResultado1.getValueAt(fila,0).toString());
+							cantidadIngresada=Integer.parseInt(resultadoString);
+							total=precioTabla*cantidadIngresada;
+							fecha=LocalDate.now().toString();
+							/*ahora insertamos los datos a la tabla XD*/
+							SqlOperaciones objeto =new SqlOperaciones();
+							objeto.insertApartados(idCliente, id_producto, cantidadIngresada, total, fecha, "en deuda");
+							//objeto.obtenerCantidadTablaProducto(id_producto);
+							
+							int cantidaTabla=Integer.parseInt(JTResultado1.getValueAt(fila, 2).toString());
+							objeto.actualizarCantidadProductos(id_producto, cantidaTabla,cantidadIngresada);
+							JOptionPane.showMessageDialog(null,"operacion realizada correctamente");
+							ConexionTableModel datos = new ConexionTableModel();
+							datos.mostrardatos("");
+							/*System.out.println("el id del cliente es: "+idCliente);
+							System.out.println("el id del producto es : "+id_producto);
+							System.out.println("cantidad: "+cantidadIngresada);
+							System.out.println("total: "+total);
+							System.out.println("fecha: "+fecha);*/
+							
+							
+						}
+						setClienteId=0;//esta variable deber ser reseteada a cero al final de cada operacion
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"no selecciono fila","Atencion",JOptionPane.WARNING_MESSAGE);
+				}
+
+			}//llaveActionPerformand
+		});
+		/*----------------jafeth8: fin de btnApartar-----------------------*/
+		btnEliminar.setBounds(577, 79, 180, 52);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				final int flsel=JTResultado1.getSelectedRow();
@@ -527,24 +542,31 @@ public class PuntoDeVenta extends JFrame {
 					
 					
 					final int flsel=JTResultado1.getSelectedRow();
+					Metodos instancia = new Metodos();
 					String Nproductos;
 					if (flsel==-1) {
 						JOptionPane.showMessageDialog(null,"NO SELECCIONO PRODUCTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 					}else{
 						try {
 						do{
-						Nproductos=JOptionPane.showInputDialog("INGRESA LA CANTIDAD DE PRODUCTOS");
-						}while(Nproductos.equals(""));	
+							Nproductos=JOptionPane.showInputDialog("INGRESA LA CANTIDAD DE PRODUCTOS");
+							/*----------------------------JAFETH8:CODIGO AGREGADO-------------------------------------------*/
+							if(instancia.isNumeric(Nproductos)==false && !Nproductos.equals("")) {
+								JOptionPane.showMessageDialog(null, "Igrese un numero!","error",JOptionPane.ERROR_MESSAGE);
+								
+							}
+							/*------------------------FIN CODIGO AGREGADO-----------------------------------------------*/
+						}while(Nproductos.equals("") || instancia.isNumeric(Nproductos)==false);//jafeth8:metodo agregado isNumeric	
 						cb=Integer.parseInt(Nproductos);
 						model = (DefaultTableModel) JTResultado1.getModel();
 						
-						cantidad=JTResultado1.getValueAt(flsel, 1).toString();
-						descripcion = JTResultado1.getValueAt(flsel, 2).toString();
-						precio=JTResultado1.getValueAt(flsel, 3).toString();
+						cantidad=JTResultado1.getValueAt(flsel, 2).toString();
+						descripcion = JTResultado1.getValueAt(flsel, 3).toString();
+						precio=JTResultado1.getValueAt(flsel, 4).toString();
 						
 						int tabla = Integer.parseInt(cantidad);
 						if (cb<=0) {
-							JOptionPane.showMessageDialog(null,"EL DATO QUE ES INCORRECTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null,"EL DATO ES INCORRECTO","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 						}else{
 						if (cb>tabla) {
 							JOptionPane.showMessageDialog(null,"PRODUCTO INSUFICIENTE","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
@@ -618,7 +640,7 @@ public class PuntoDeVenta extends JFrame {
 				
 				
 				Calendar fecha = new GregorianCalendar();
-				int año = fecha.get(Calendar.YEAR);
+				int anio = fecha.get(Calendar.YEAR);
 		        int mes = fecha.get(Calendar.MONTH)+1;
 		        int dia = fecha.get(Calendar.DAY_OF_MONTH);
 		        int hora = fecha.get(Calendar.HOUR_OF_DAY);
@@ -664,7 +686,7 @@ public class PuntoDeVenta extends JFrame {
 									} 
 										catch (SQLException e2) {
 										// TODO Auto-generated catch block
-										e2.printStackTrace();
+                                                                                    e2.printStackTrace();
 										}							
 							}
 							
@@ -679,8 +701,8 @@ public class PuntoDeVenta extends JFrame {
 						    					
 									
 							try {
-								//'"+año+"-"+mes+"-"+dia+"'
-								stmnt.executeUpdate("INSERT INTO `tienda2015`.`facturas` (`Numero_ticket`, `Fecha`, `HORA`, `Pago`) VALUES (NULL, '"+año+"-"+(mes+1)+"-"+dia+"', '"+hora+":"+minuto+":"+segundo+"', '"+total+"');");
+								//'"+aï¿½o+"-"+mes+"-"+dia+"'
+								stmnt.executeUpdate("INSERT INTO `tienda2015`.`facturas` (`Numero_ticket`, `Fecha`, `HORA`, `Pago`) VALUES (NULL, '"+anio+"-"+(mes+1)+"-"+dia+"', '"+hora+":"+minuto+":"+segundo+"', '"+total+"');");
 								
 								ConexionTableModel ctm=new ConexionTableModel("select * from facturas");
 								Facturas.TFacturas.setModel(ctm.getTablemodel());
@@ -695,7 +717,7 @@ public class PuntoDeVenta extends JFrame {
 							
 							
 													
-							int pre=JOptionPane.showConfirmDialog(null, "¿ DESEA IMPRIMIR TICKET ?");
+							int pre=JOptionPane.showConfirmDialog(null, "ï¿½ DESEA IMPRIMIR TICKET ?");
 							 if (pre==0) {							
 							try {
 								 PrinterMatrix printer = new PrinterMatrix();
@@ -705,8 +727,8 @@ public class PuntoDeVenta extends JFrame {
 								   e1.setNumber(10);
 								    //Definir el tamanho del papel para la impresion de dinamico y 32 columnas
 								    int filas = table.getRowCount();
-								    int tamaño = filas+15;
-								    printer.setOutSize(tamaño, 80);
+								    int tamanio = filas+15;
+								    printer.setOutSize(tamanio, 80);
 
 								    //Imprimir = 1ra linea de la columa de 1 a 32
 								    printer.printTextWrap(0, 1, 5, 80, "=======================================================");
@@ -715,12 +737,12 @@ public class PuntoDeVenta extends JFrame {
 								    printer.printTextWrap(2, 1, 40, 80, "Tel. 452-194-6841"); //Direccion
 								    printer.printTextWrap(2, 1, 10, 80, "Ahuiran,Mich."); //Codigo Postal
 								    
-								    printer.printTextWrap(3, 1, 0, 40, "Fecha: "+dia+"/"+mes+"/"+año); //Aqui va la fecha de recibo
+								    printer.printTextWrap(3, 1, 0, 40, "Fecha: "+dia+"/"+mes+"/"+anio); //Aqui va la fecha de recibo
 								    printer.printTextWrap(3, 1, 40, 80, "Hora"+hora+":"+minuto+":"+segundo); //Aqui va la hora de recibo
 								    
 								   
 								    //printer.printTextWrap(9, 1, 3, 80, "Cliente");//Nombre del Cliente
-								    //printer.printTextWrap(10,1, 5, 80, "——————————–——————————–——————————–——————————–——–———–——–—–———–——–———");
+								    //printer.printTextWrap(10,1, 5, 80, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 								    printer.printTextWrap(4,1, 0, 80, "Cant.   Producto    P/U   Sub.T");
 								    //printer.printTextWrap(12,1, 0, 80, "## ");
 
@@ -756,7 +778,7 @@ public class PuntoDeVenta extends JFrame {
 								    printer.printTextWrap(filas+9, 1, 5, 80, "Cambio : ");
 								    printer.printTextWrap(filas+9, 1, 20, 80, "$"+ Cambio.getText());
 
-								    //printer.printTextWrap(filas+21, 1, 5, 80, "——————————–——————————–——————————–——————————–——–———–——–—–———–——–———");
+								    //printer.printTextWrap(filas+21, 1, 5, 80, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 								    printer.printTextWrap(filas+10, 1, 5,80, "!Gracias por su Compra!");
 								    printer.printTextWrap(filas+11, 1, 5, 80, "Constructora silva");
 								    printer.printTextWrap(filas+12, 1, 5, 80, "Atendido por : "+UsuarioLabel.getText());
@@ -1010,7 +1032,7 @@ public class PuntoDeVenta extends JFrame {
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int pre=JOptionPane.showConfirmDialog(null, "¿ DESEAS SALIR DEL PROGRAMA ?");
+				int pre=JOptionPane.showConfirmDialog(null, "ï¿½ DESEAS SALIR DEL PROGRAMA ?");
 				 if (pre==0) {
 				System.exit(1);
 				 }
@@ -1171,7 +1193,7 @@ public class PuntoDeVenta extends JFrame {
 		mntmSalir_1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				int pre=JOptionPane.showConfirmDialog(null, "¿ DESEA CERRAR SESION ?");
+				int pre=JOptionPane.showConfirmDialog(null, "ï¿½ DESEA CERRAR SESION ?");
 				 if (pre==0) {
 				// TODO Auto-generated method stub
 					 
@@ -1220,9 +1242,9 @@ public class PuntoDeVenta extends JFrame {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM tcompras WHERE DESCRIPCION='"+des+"'");
             if( resultadosConsulta.first() )        
@@ -1244,11 +1266,11 @@ public class PuntoDeVenta extends JFrame {
     	     Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
-    	    	 ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE CODIGO_BARRA='"+des+"'");
+    	    	 ResultSet resultadosConsulta = stmnt.executeQuery ("select * FROM productos WHERE CODIGO_BARRA='"+des+"'");
     	    	  if( resultadosConsulta.first() )        
     	                return true;        
     	            else
@@ -1268,11 +1290,11 @@ public class PuntoDeVenta extends JFrame {
     	    Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
-    	    	 ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM productos WHERE DESCRIPCION='"+des+"'");
+    	    	 ResultSet resultadosConsulta = stmnt.executeQuery ("select * FROM productos WHERE DESCRIPCION='"+des+"'");
     	    	  if( resultadosConsulta.first() )        
     	                return true;        
     	            else
@@ -1283,16 +1305,6 @@ public class PuntoDeVenta extends JFrame {
             return false;
 		}
     }
-	
-	/*------------------**************JAFETH8***************----------------------*/
-	
-	public void codigoProducto() {
-
-					
-	}
-	
-	
-	/*-------------------****************************************---------------------*/
 	
 	public void imprimir() throws IOException
 	{

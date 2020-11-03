@@ -38,7 +38,6 @@ import javax.swing.JScrollBar;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
-import org.omg.CORBA.CTX_RESTRICT_SCOPE;
 
 import Punto_de_venta.AgregarUsuarios;
 
@@ -50,7 +49,7 @@ public class Login extends JFrame {
 	private JTextField TFQuery;
 	private JPanel contentPane;
 	static Login frame = new Login();
-	static JPasswordField contraseña;
+	static JPasswordField contrasenia;
     static JComboBox Usuarios ;
     static JLabel LabelVerificacion;
     static JProgressBar progressBar;
@@ -63,7 +62,7 @@ public class Login extends JFrame {
     static Statement stmnt=null;
     static ResultSet rs=null;
     String Usuario="Alejandro";
-	String Contraseña="12345";
+	String Contrasenia="12345";
 	String URL="jdbc:mysql://localhost/tienda2015";
 	static JTable JTResultadoUser;
 	static String usuarioadentro;
@@ -105,10 +104,10 @@ public class Login extends JFrame {
                 {                    
                 	a=(String)Usuarios.getSelectedItem();
                     //chekar si el usuario escrbio el nombre de usuario y pw
-                    if (contraseña.getText().length() > 0 )
+                    if (contrasenia.getText().length() > 0 )
                     {
                         // Si el usuario si fue validado correctamente
-                        if( validarUsuario( a, contraseña.getText() ) )    //enviar datos a validar
+                        if( validarUsuario( a, contrasenia.getText() ) )    //enviar datos a validar
                         {
                             // Codigo para mostrar la ventana principal
                         	if (a.equals("Administrador")) {
@@ -123,7 +122,7 @@ public class Login extends JFrame {
                         {
                             
                             JOptionPane.showMessageDialog(null,"EL NOMBRE DE USUARIO Y/O CONTRASELA NO SON VALIDOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-                            contraseña.setText("");        
+                            contrasenia.setText("");        
                         }
                     }
                     else
@@ -148,13 +147,13 @@ public class Login extends JFrame {
 		btnEntrar.setBounds(494, 359, 205, 41);
 		contentPane.add(btnEntrar);
 		
-		contraseña = new JPasswordField();
-		contraseña.setBounds(282, 301, 429, 20);
-		contraseña.setToolTipText("Escriba su nombre de usuario");
+		contrasenia = new JPasswordField();
+		contrasenia.setBounds(282, 301, 429, 20);
+		contrasenia.setToolTipText("Escriba su nombre de usuario");
 		
-		contentPane.add(contraseña);
+		contentPane.add(contrasenia);
 		
-		contraseña.addActionListener(new ActionListener() {
+		contrasenia.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -163,10 +162,10 @@ public class Login extends JFrame {
                 {                    
                 	a=(String)Usuarios.getSelectedItem();
                     //chekar si el usuario escrbio el nombre de usuario y pw
-                    if (contraseña.getText().length() > 0 )
+                    if (contrasenia.getText().length() > 0 )
                     {
                         // Si el usuario si fue validado correctamente
-                        if( validarUsuario( a, contraseña.getText() ) )    //enviar datos a validar
+                        if( validarUsuario( a, contrasenia.getText() ) )    //enviar datos a validar
                         {
                             // Codigo para mostrar la ventana principal
                         	if (a.equals("Administrador")) {
@@ -178,7 +177,7 @@ public class Login extends JFrame {
                      else
                         {
                             JOptionPane.showMessageDialog(null,"EL NOMBRE DE USUARIO Y/O CONTRASELA NO SON VALIDOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-                            contraseña.setText("");        
+                            contrasenia.setText("");        
                         }
                     }
                     else
@@ -245,9 +244,9 @@ public class Login extends JFrame {
 		java.sql.Connection conn=null;
    	    Statement stmnt=null;
    	    String Usuario="Alejandro";
-   		String Contraseña="12345";
+   		String Contrasenia="12345";
    		String URL="jdbc:mysql://localhost/tienda2015";
-   	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+   	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
    	    stmnt=conn.createStatement();
    	    
    	    ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM usuarios");
@@ -313,9 +312,9 @@ public class Login extends JFrame {
     	    Statement stmnt=null;
     	    ResultSet rs=null;
     	    String Usuario="Alejandro";
-    		String Contraseña="12345";
+    		String Contrasenia="12345";
     		String URL="jdbc:mysql://localhost/tienda2015";
-    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contraseña);
+    	    conn=(Connection) DriverManager.getConnection(URL,Usuario,Contrasenia);
     	    stmnt=conn.createStatement();
             ResultSet resultadosConsulta = stmnt.executeQuery ("SELECT * FROM usuarios WHERE USUARIOS='"+elUsr+"' AND CONTRASEÑAS='"+ elPw+"'");
             if( resultadosConsulta.first() )        
@@ -354,22 +353,22 @@ public class Login extends JFrame {
 					LabelVerificacion.setText("VALIDANDO USUARIO......");
 				}
                 if (i==70) {
-					LabelVerificacion.setText("VALIDANDO CONTRASEÑA......");
+					LabelVerificacion.setText("VALIDANDO CONTRASEï¿½A......");
 				}
                 if (i==100) {
 					 try {
-						if( validarUsuario( a, contraseña.getText()))
+						if( validarUsuario( a, contrasenia.getText()))
 						 {
 							LabelVerificacion.setText("VERIFICACION EXITOSA");						     
 						    frame.setVisible(false);
 						    PuntoDeVenta.frame1.setVisible(false);
                      		PuntoDeVenta.frame.setVisible(true);
-                     		contraseña.setText("");
+                     		contrasenia.setText("");
 						 }
               else
 						 {
 						     JOptionPane.showMessageDialog(null,"EL NOMBRE DE USUARIO Y/O CONTRASELA NO SON VALIDOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
-						     contraseña.setText("");
+						     contrasenia.setText("");
 						     LabelVerificacion.setText("ERROR EN VERIFICAR USUARIO");
 						 }
 					} catch (HeadlessException e) {

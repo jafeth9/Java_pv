@@ -71,7 +71,7 @@ public class EliminarDatos extends JDialog {
 						JOptionPane.showMessageDialog(null,"VERIFICA QUE LOS CAMPO ESTEN LLENOS","Mensaje de Error", JOptionPane.ERROR_MESSAGE);
 					}
 					String Usuario="Alejandro";
-					String Contraseña="12345";
+					String Contrasenia="12345";
 					String URL="jdbc:mysql://localhost/tienda2015";
 					
 				    java.sql.Connection conn=null;
@@ -79,7 +79,7 @@ public class EliminarDatos extends JDialog {
 				    ResultSet rs=null;
 				    
 					try{
-					conn=DriverManager.getConnection(URL,Usuario,Contraseña);
+					conn=DriverManager.getConnection(URL,Usuario,Contrasenia);
 					stmnt=conn.createStatement();
 					stmnt.executeUpdate("delete from productos where DESCRIPCION='"+producto.getText()+"' or CODIGO_BARRA='"+producto.getText()+"' ;");
 					ConexionTableModel ctm=new ConexionTableModel("select * from productos");

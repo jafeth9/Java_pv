@@ -79,7 +79,7 @@ public class Facturas extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	static Facturas dialog = new Facturas();
 	String Fecha_DE_Compra;  
-	String PÁGO_TOTAL;
+	String PAGO_TOTAL;
 	static JTable TFacturas;
 	
 	static java.sql.Connection conn=null;
@@ -89,7 +89,7 @@ public class Facturas extends JDialog {
     static JLabel todo;
     static double Contador=0;
     
-	String Contraseña="12345";
+	String Contrasenia="12345";
 	String URL="jdbc:mysql://localhost/tienda2015";
 	private JTextField Tfecha;
 
@@ -155,7 +155,7 @@ public class Facturas extends JDialog {
 		            
 	                doc.close();
 	                
-	                int pre=JOptionPane.showConfirmDialog(null, "¿ DESEA IMPRIMIR TICKETS ?");
+	                int pre=JOptionPane.showConfirmDialog(null, "ï¿½ DESEA IMPRIMIR TICKETS ?");
 					 if (pre==0) {
 				     imprimir();
 				     Imprimir.dialog.setVisible(true);
@@ -200,10 +200,10 @@ public class Facturas extends JDialog {
 			ctm = new ConexionTableModel("SELECT * FROM facturas");
 			TFacturas.setModel(ctm.getTablemodel());
 			Calendar fecha = new GregorianCalendar();
-			int año = fecha.get(Calendar.YEAR);
+			int anio = fecha.get(Calendar.YEAR);
 	        int mes = fecha.get(Calendar.MONTH);
 	        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-			Tfecha.setText(""+año+"-"+(mes+1)+"-"+dia+"");
+			Tfecha.setText(""+anio+"-"+(mes+1)+"-"+dia+"");
 			
 			Contador=0;
 			
