@@ -89,7 +89,7 @@ public class Metodos {
 	   
 	   abonoAcumulado=abonoTotal+abono;
 	   if(abonoAcumulado>precioTotal) {
-		   JOptionPane.showMessageDialog(null, "hey! ya tan solo la deuda es de: "+deuda+" ingresa la cantidad que corresponde al abono","error",JOptionPane.ERROR_MESSAGE);
+		   JOptionPane.showMessageDialog(null, "Tan solo la deuda es de: "+deuda+" ingresa la cantidad que corresponde al abono","error",JOptionPane.ERROR_MESSAGE);
 		   resultado=false;
 	   }
 	  

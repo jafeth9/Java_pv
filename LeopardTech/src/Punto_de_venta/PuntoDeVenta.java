@@ -187,6 +187,7 @@ public class PuntoDeVenta extends JFrame {
 	 * Create the frame.
 	 */
 	public PuntoDeVenta() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\"+Ruta.imagen+"\\Abarrotes El Atoron\\Imagenes\\ordenador-icono-8301-96.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1050, 730);
@@ -1041,12 +1042,8 @@ public class PuntoDeVenta extends JFrame {
 		});
 		mnArchivo.add(mntmSalir);
 		
-		JMenu menu = new JMenu("");
+		JMenu menu = new JMenu("                         ");
 		menuBar.add(menu);
-		
-		JMenu menu_1 = new JMenu("                                  ");
-		menu_1.setEnabled(false);
-		menuBar.add(menu_1);
 		
 		JMenu mnProductos = new JMenu("PRODUCTOS");
 		mnProductos.setFont(new Font("Andalus", Font.BOLD, 15));
@@ -1166,6 +1163,10 @@ public class PuntoDeVenta extends JFrame {
 		
 	
 		/*------------FIN DE JMENU CLIENTES-------------------------------*/
+		
+		JMenu menu_3 = new JMenu("                                  ");
+		menu_3.setEnabled(false);
+		menuBar.add(menu_3);
 		JMenu mnFacturas = new JMenu("REPORTES");
 		mnFacturas.setFont(new Font("Andalus", Font.BOLD, 15));
 		mnFacturas.setIcon(new ImageIcon("C:\\"+Ruta.imagen+"\\presidencia\\Imagenes\\ICONOS\\rep.png"));
@@ -1199,9 +1200,8 @@ public class PuntoDeVenta extends JFrame {
 			}
 		});
 		
-		JMenu menu_3 = new JMenu("                                  ");
-		menu_3.setEnabled(false);
-		menuBar.add(menu_3);
+		JMenu menu_4 = new JMenu("                    ");
+		menuBar.add(menu_4);
 		
 		
 		JMenu mnCerrarSesion = new JMenu("CERRAR SESION");

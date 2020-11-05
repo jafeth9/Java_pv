@@ -188,6 +188,7 @@ public class VerApartados extends JDialog {
 					    
 					    JOptionPane.showMessageDialog(null,"operacion realizada correctamente");
 					    mostrarApartados();
+					    JOptionPane.showMessageDialog(null, "El cambio es de: "+cambio+"");
 					    dispose();
 //						System.out.println("id apartado: "+idApartado);
 //						System.out.println("abono: "+abono);
