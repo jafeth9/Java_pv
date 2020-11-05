@@ -117,6 +117,7 @@ public class PuntoDeVenta extends JFrame {
 	/*------------jafeth8******************----------------------------*/
 	static JButton btnApartar = new JButton("APARTAR PRODUCTOS");
 	public static int setClienteId=0;
+	static JMenu mnClientes= new JMenu("CLIENTES");
 	/*------------******************-----------------------------------*/
 	static JTextField TFQuery1;
 	static int codigodebarra;
@@ -129,7 +130,7 @@ public class PuntoDeVenta extends JFrame {
 	static JTextField CodigoBarra = new JTextField();
 	static DefaultTableModel model ;
 	static JMenu mnUsuarios= new JMenu("USUARIOS");
-	static JMenu mnClientes= new JMenu("CLIENTES");
+	
 	static JButton btnEliminar = new JButton("ELIMINAR PRODUCTO");
 	static float total=0;
 	static String subtotaltabla;
@@ -486,7 +487,7 @@ public class PuntoDeVenta extends JFrame {
 							fecha=LocalDate.now().toString();
 							/*ahora insertamos los datos a la tabla XD*/
 							SqlOperaciones objeto =new SqlOperaciones();
-							objeto.insertApartados(idCliente, id_producto, cantidadIngresada, total, fecha, "en deuda");
+							objeto.insertApartados(idCliente, id_producto, cantidadIngresada, total, fecha,total, "en deuda");
 							//objeto.obtenerCantidadTablaProducto(id_producto);
 							
 							int cantidaTabla=Integer.parseInt(JTResultado1.getValueAt(fila, 2).toString());
@@ -1032,7 +1033,7 @@ public class PuntoDeVenta extends JFrame {
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int pre=JOptionPane.showConfirmDialog(null, "� DESEAS SALIR DEL PROGRAMA ?");
+				int pre=JOptionPane.showConfirmDialog(null, "DESEAS SALIR DEL PROGRAMA ?");
 				 if (pre==0) {
 				System.exit(1);
 				 }
@@ -1086,7 +1087,7 @@ public class PuntoDeVenta extends JFrame {
 			}
 		});
 		
-		JMenu menu_2 = new JMenu("                                  ");
+		JMenu menu_2 = new JMenu("                              ");
 		menu_2.setEnabled(false);
 		menuBar.add(menu_2);
 		mnUsuarios.setFont(new Font("Andalus", Font.BOLD, 15));
@@ -1134,7 +1135,37 @@ public class PuntoDeVenta extends JFrame {
 		JMenu mnNewMenu = new JMenu("                                  ");
 		mnNewMenu.setEnabled(false);
 		menuBar.add(mnNewMenu);
+		/*------------JAFETH8:JMENU CLIENTES------------------------------*/
+		JMenu jmenuClientes = new JMenu("CLIENTES");
+		jmenuClientes.setFont(new Font("Andalus", Font.BOLD, 15));
+		jmenuClientes.setIcon(new ImageIcon("C:\\"+Ruta.imagen+"\\presidencia\\Imagenes\\ICONOS\\anadir-carrito-icono-3759-32.png"));
+		menuBar.add(jmenuClientes);
 		
+		JMenuItem itemAgregarClientes = new JMenuItem("AGREGAR CLIENTES");
+		jmenuClientes.add(itemAgregarClientes);
+		itemAgregarClientes.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		JMenuItem itemRegitrarImporte = new JMenuItem("REGISTRAR ABONO DE APARTADO");
+		jmenuClientes.add(itemRegitrarImporte);
+		itemRegitrarImporte.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				VerApartados instancia =new VerApartados();
+				instancia.setVisible(true);
+			}
+		});
+		
+	
+		/*------------FIN DE JMENU CLIENTES-------------------------------*/
 		JMenu mnFacturas = new JMenu("REPORTES");
 		mnFacturas.setFont(new Font("Andalus", Font.BOLD, 15));
 		mnFacturas.setIcon(new ImageIcon("C:\\"+Ruta.imagen+"\\presidencia\\Imagenes\\ICONOS\\rep.png"));
